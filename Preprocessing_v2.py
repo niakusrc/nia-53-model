@@ -24,6 +24,8 @@ import glob, pickle
 from datetime import datetime, date
 import matplotlib.cm as cm
 from tqdm import tqdm
+import warnings
+warnings.filterwarnings('ignore')
 
 # Json_Filelist = os.listdir('C:/Users/KUSRC/Desktop/Customized_TGNet/Customized_TGNet/raw_data/NIA_08_11_Total/')
 def RegionCorditable(Cordtable, region):
@@ -290,12 +292,13 @@ def Preprocessiong_v2(path,region_name,test=False):
         # print('전체 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
 
         for reg in Regionlist:
-            print(reg + '테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
+
             # print(RealDementData[reg])
             # region_maximum_value = np.max(RealDementData[reg][:, :, :])
             # for i in range(0, RealDementData[reg].shape[2]):
             #     RealDementData[reg][:, :, i] = RealDementData[reg]
             if reg == "서울특별시" and region_name == 'seoul':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'seoul'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -303,7 +306,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == "대전광역시" and region_name == 'daejeon':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'daejeon'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -311,7 +316,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == "경기도" and region_name == 'gyeonggi':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'gyeonggi'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -319,7 +326,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '대구광역시' and region_name == 'daegu':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'daegu'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -327,7 +336,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '부산광역시' and region_name == 'busan':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'busan'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -335,7 +346,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '울산광역시' and region_name == 'ulsan':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'ulsan'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -343,7 +356,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '광주광역시' and region_name == 'gwangju':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'gwangju'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -351,7 +366,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '인천광역시' and region_name == 'incheon':
+                print(reg + ' 테스트 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'incheon'
                 with open('./preprocessing_v2/test/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -359,11 +376,12 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/test/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             else:
                 trans_reg = reg
 
 
-            print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
+
     else:
         # print('전체 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
         # with open('./preprocessing_v2/total/_DemandData_1step.pkl', 'wb') as f:
@@ -377,12 +395,13 @@ def Preprocessiong_v2(path,region_name,test=False):
         # print('전체 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
 
         for reg in Regionlist:
-            print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
+
             # print(RealDementData[reg])
             # region_maximum_value = np.max(RealDementData[reg][:, :, :])
             # for i in range(0, RealDementData[reg].shape[2]):
             #     RealDementData[reg][:, :, i] = RealDementData[reg]
             if reg == "서울특별시" and region_name == 'seoul':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'seoul'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -390,7 +409,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == "대전광역시" and region_name == 'daejeon':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'daejeon'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -398,7 +419,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == "경기도" and region_name == 'gyeonggi':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'gyeonggi'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -406,7 +429,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '대구광역시' and region_name == 'daegu':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'daegu'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -414,7 +439,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '부산광역시' and region_name == 'busan':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'busan'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -422,7 +449,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '울산광역시' and region_name == 'ulsan':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'ulsan'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -430,7 +459,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '광주광역시' and region_name == 'gwangju':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'gwangju'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -438,7 +469,9 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             elif reg == '인천광역시' and region_name == 'incheon':
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 시작')
                 trans_reg = 'incheon'
                 with open('./preprocessing_v2/total/' + trans_reg + '_DemandData_1step.pkl', 'wb') as f:
                     pickle.dump(RealDementData[reg], f)
@@ -446,10 +479,11 @@ def Preprocessiong_v2(path,region_name,test=False):
                     pickle.dump(RealGuideData[reg], f)
                 with open('./preprocessing_v2/total/' + trans_reg + '_ROIData_1step.pkl', 'wb') as f:
                     pickle.dump(RealROIData[reg], f)
+                print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
             else:
                 trans_reg = reg
 
-            print(reg + '지역 시계열 데이터 Pickle 형식 파일 저장 작업 끝')
+
 
         # with open(os.getcwd() + '/preprocessing/'+reg+'_DemandData_1step.pkl', 'rb') as f:
         #    RealDementData = pickle.load(f)
