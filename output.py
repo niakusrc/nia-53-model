@@ -59,17 +59,16 @@ def save_test_output(pred_inverse, y_inverse,x_test = None, output_path=None):
     pd.set_option('display.max_seq_items', None)
     for i in range(df_pred.shape[0]):
         # time.sleep(1)
-        print('--- ',i,'번 째 데이터 결과 ---')
-        print('GT 값 : \n',df_y.iloc[i])
+        print('--- ',i,'번 째 데이터 결과 출력 시작 ---')
+        print('GT 값 : \n',df_y.iloc[i].values.reshape(8,8))
         # time.sleep(1)
-        print('예측 값 : \n', df_pred.iloc[i])
+        print('예측 값 : \n', df_pred.iloc[i].values.reshape(8,8))
         # time.sleep(1)
         print(i,'번째 데이터 예측에 사용된 교통 유발 시설물 정보 (count) : \n',df_roi.iloc[i])
         # time.sleep(1)
-        print('--- ', i, '번 째 데이터 결과 ---')
+        print('--- ', i, '번 째 데이터 결과 출력 끝 ---')
 
     print('MAPE original Data(+1) : %.3f'%mape(y_inverse, pred_inverse))
-    print('')
 
     model_output_chk(output_path)
 

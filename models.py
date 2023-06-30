@@ -163,6 +163,7 @@ class BaseModel():
         # min_val_st, max_val_st = get_min_max(load_np_data(self.args.dataset+'x_st_train.npz'), self.scale)
         # max_val_st, min_val_st = min_max_calc(region)
         pred_output = self.model.predict(x_test)
+        print('pred_output : ',pred_output)
         # atypical_index = output.get_atypical_idx(y_train, x_train[2], y_test, x_test[2], is_holiday=True, alpha=self.args.alpha, dataset=self.args.dataset_name)
         if is_save:
             #assert self.scale == 'log'

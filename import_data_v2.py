@@ -1,9 +1,11 @@
 import copy
+import os
 import pickle
 import pandas as pd
 import cv2
 import numpy as np
 import datetime
+import glob, pickle
 import warnings
 warnings.filterwarnings(action='ignore')
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -11,15 +13,15 @@ warnings.simplefilter(action='ignore', category=FutureWarning)
 def load_test_data(region):
     print('#### Data Loading Process Start ####')
     print('Time is : ', datetime.datetime.now())
+    print(region + '지역 승하차 데이터를 불러옵니다.')
     demand_data = pd.read_pickle("./preprocessing_v2/test/"+region+"_DemandData_1step.pkl")
     # demand_data = pd.read_pickle("data/total/DemandData_normal.pkl") ## last used
     # demand_data = pd.read_pickle("data/total/DemandData_1step.pkl")
     demand_data = demand_data.T
-    print(region+'지역 test demand data type : ',type(demand_data))
-    print(region+'지역 test demand data length : ', len(demand_data))
-    print(region+'지역 test demand data shape : ', demand_data.shape)
+    print(region+'지역 테스트 demand(승차) 데이터 길이 : ', len(demand_data))
+    print(region+'지역 테스트 demand(승차) 데이터 형태 : ', demand_data.shape)
 
-    print(region+'지역 마스크 필터를 demand 데이터에 적용합니다.')
+    print(region+'지역 마스크 필터를 demand(승차) 데이터에 적용합니다.')
     mask = cv2.imread('./region/'+region+'filter.jpg',cv2.IMREAD_GRAYSCALE)
     # print('mask : ',mask)
     for i in range(len(mask)):
@@ -31,12 +33,12 @@ def load_test_data(region):
     # print(mask)
     for idx,eliment in enumerate(demand_data):
         demand_data[idx] = np.multiply(eliment,mask)
-    print(region + '지역 마스크 필터를 demand 데이터에 적용하였습니다.')
+    print(region + '지역 마스크 필터를 demand(승차) 데이터에 적용하였습니다.')
     # print(demand_data[0])
     demand_x = []
     demand_y = []
     tmp = []
-    print(region + '지역 demand 데이터의 입력 데이터와 정답 데이터를 분할합니다.')
+    print(region + '지역 demand(승차) 데이터의 입력 데이터와 정답 데이터를 분할합니다.')
     for idx,data in enumerate(demand_data):
         # print(idx,'번 째 demand 데이터를 ',len(demand_x),'번째 시계열 묶음에 추가합니다.')
         tmp.append(data)
@@ -50,11 +52,13 @@ def load_test_data(region):
                 demand_y.append(demand_data[idx])
                 # print('마지막 demand 데이터를 ', len(demand_y), '번째 정답 데이터 리스트에 추가합니다.')
             tmp = []
-    print(region + '지역 demand 데이터의 입력 데이터와 정답 데이터를 분할하였습니다.')
-    print('demand_y shape : ',np.array(demand_y).shape)
+    print(region + '지역 demand(승차) 데이터의 입력 데이터와 정답 데이터를 분할하였습니다.')
+    print('입력 demand(승차) 데이터 형태 : ',np.array(demand_x).shape)
+    print('정답 demand(승차) 데이터 형태 : ',np.array(demand_y).shape)
 
     demand_x = np.array(demand_x).swapaxes(1, 3)
     supply_x = []
+    print(region + '지역 supply(하차) 입력 데이터를 분할합니다.')
     for i in range(len(demand_x)):
         tmp = []
         for j in range(8):
@@ -64,16 +68,25 @@ def load_test_data(region):
                 tmp.append(demand_data[-1])
         supply_x.append(tmp)
         tmp = []
+    print(region + '지역 supply(하차) 입력 데이터를 분할하였습니다.')
+    print('supply(하차) 입력 데이터 형태 : ',np.array(supply_x).shape)
     supply_x = np.array(supply_x)
     guide_x = []
+    print(region + '지역 guide(시간관계) 데이터를 불러옵니다.')
     guide_data = pd.read_pickle('./preprocessing_v2/test/'+region+'_GuideData_1step.pkl')
+    print(region + '지역 guide(시간관계) 데이터를 변환합니다.')
     guide_data = guide_data.T
     guide_x = guide_data[::4]
     guide_x = guide_x.reshape(len(guide_x),57)
+    print(region + '지역 guide(시간관계) 데이터를 변환하였습니다.')
+    print('guide(시간관계) 데이터 형태 : ',guide_x.shape)
+
+    print(region + '지역 ROI(교통유발시설물) 데이터를 불러옵니다.')
     roi_data = pd.read_pickle('./preprocessing_v2/test/'+region+'_ROIData_1step.pkl')
     roi_input = copy.deepcopy(roi_data)
     roi_input = roi_input.T
     roi_input.reshape(len(roi_input), 57)
+    print(region + '지역 ROI(교통유발시설물) 데이터를 시계열 구간으로 통합합니다.')
     roi_input1 = roi_input[0::4]
     roi_input2 = roi_input[1::4]
     roi_input3 = roi_input[2::4]
@@ -81,16 +94,24 @@ def load_test_data(region):
     roi_x = [x + y + z + w for x, y, z, w in zip(roi_input1, roi_input2, roi_input3, roi_input4)]
     roi_x = np.array(roi_x)
     roi_x = roi_x.reshape(len(roi_x), 57)
+    print(region + '지역 ROI(교통유발시설물) 데이터를 시계열 구간으로 통합하였습니다.')
+    print('ROI(교통유발시설물) 데이터 형태 : ',roi_x.shape)
     x_test = []
     y_test = []
     demand_y = np.array(demand_y)
+    print('demand(승차), supply(하차), guide(시간관계), ROI(교통유발시설물) 데이터를 입력 데이터로 통합합니다.')
     x_test.append(demand_x[:])
     x_test.append(supply_x[:])
     x_test.append(guide_x[:])
     x_test.append(roi_x[:])
     y_test = demand_y[:, :, :].reshape(int(len(demand_y[:, :, :])), 8, 8, 1)
-    print('split_target time : ',int(len(demand_y)))
-
+    print('변환된 시계열 데이터 개수 : ',int(len(demand_y)))
+    print('변환한 입력 및 정답 데이터를 '+os.getcwd().replace('\\','/')+'/input/ 경로에 pickle 형태로 저장합니다.')
+    with open(os.getcwd()+'/input/x_test.pkl', 'wb') as f:
+        pickle.dump(x_test, f)
+    with open(os.getcwd()+'/input/y_test.pkl', 'wb') as f:
+        pickle.dump(y_test, f)
+    print('변환한 입력 및 정답 데이터를 '+os.getcwd().replace('\\', '/')+'/input/ 경로에 pickle 형태로 저장하였습니다.')
     print('#### Data Loading Process Start ####')
     print('Time is : ', datetime.datetime.now())
     return  x_test, y_test
@@ -443,4 +464,4 @@ def min_max_calc(region):
 
 # load_data('seoul')
 # load_prediction_data('seoul')
-load_test_data('seoul')
+# load_test_data('seoul')
