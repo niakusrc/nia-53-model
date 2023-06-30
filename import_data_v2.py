@@ -107,9 +107,9 @@ def load_test_data(region):
     y_test = demand_y[:, :, :].reshape(int(len(demand_y[:, :, :])), 8, 8, 1)
     print('변환된 시계열 데이터 개수 : ',int(len(demand_y)))
     print('변환한 입력 및 정답 데이터를 '+os.getcwd().replace('\\','/')+'/input/ 경로에 pickle 형태로 저장합니다.')
-    with open(os.getcwd()+'/input/x_test.pkl', 'wb') as f:
+    with open(os.getcwd()+'/input/'+region+'_x_test.pkl', 'wb') as f:
         pickle.dump(x_test, f)
-    with open(os.getcwd()+'/input/y_test.pkl', 'wb') as f:
+    with open(os.getcwd()+'/input/'+region+'_y_test.pkl', 'wb') as f:
         pickle.dump(y_test, f)
     print('변환한 입력 및 정답 데이터를 '+os.getcwd().replace('\\', '/')+'/input/ 경로에 pickle 형태로 저장하였습니다.')
     print('#### Data Loading Process Start ####')
