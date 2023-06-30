@@ -11,6 +11,13 @@ def clear_directory(dir_name):
         os.makedirs(dir_path + '/' + dir_name)
         with open(dir_path + '/' + dir_name + '/' +dir_name, 'w') as f:
             f.write(dir_name)
+        if dir_name=='preprocessing_v2':
+            os.makedirs(dir_path + '/' + dir_name + '/test')
+            with open(dir_path + '/' + dir_name + '/test/test', 'w') as f:
+                f.write(dir_name)
+            os.makedirs(dir_path + '/' + dir_name + '/total')
+            with open(dir_path + '/' + dir_name + '/total/total', 'w') as f:
+                f.write(dir_name)
 
 
 
