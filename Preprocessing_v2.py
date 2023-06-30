@@ -528,7 +528,7 @@ def Preprocessiong_v2(path,region_name,test=False):
 if __name__ == "__main__":
     import argparse
     print('[*] Program Starts')
-    print('Time is : ', datetime.datetime.now())
+    print('Time is : ', datetime.now())
     parser = argparse.ArgumentParser(description='')
     parser.add_argument('--test', type=bool, default=False)
     parser.add_argument('--data_path',type=str,default='./dataset/')
@@ -536,7 +536,7 @@ if __name__ == "__main__":
     args = parser.parse_args()
     print('[*] Command : python Preprocessing_v2.py --test True'+' --data_path ' + (args.data_path)+' --region '+str(args.region))
     print('[!] Preprocessing Start')
-    print('Time is : ', datetime.datetime.now())
+    print('Time is : ', datetime.now())
     Preprocessiong_v2(args.data_path,args.region, args.test)
     print('[*] Preprocessing End')
-    print('Time is : ', datetime.datetime.now())
+    print('Time is : ', datetime.now())
