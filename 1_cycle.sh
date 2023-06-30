@@ -1,4 +1,12 @@
-python Preprocessing_v2.py --test True
+python Preprocessing_v2.py --test True --region busan | tee ./log/busan모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region daegu | tee ./log/daegu모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region daejeon | tee ./log/daejeon모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region gwangju | tee ./log/gwangju모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region gyeonggi | tee ./log/gyeonggi모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region incheon | tee ./log/incheon모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region seoul | tee ./log/seoul모델_전처리_터미널_로그.txt
+python Preprocessing_v2.py --test True --region ulsan | tee ./log/ulsan모델_전처리_터미널_로그.txt
+
 python main.py --num_gpu 0 --model_name busan --region busan --scale min_max --test | tee ./log/busan모델_테스트_터미널_로그.txt
 python main.py --num_gpu 0 --model_name daegu --region daegu --scale min_max --test | tee ./log/daegu모델_테스트_터미널_로그.txt
 python main.py --num_gpu 0 --model_name daejeon --region daejeon --scale min_max --test | tee ./log/daejeon모델_테스트_터미널_로그.txt
