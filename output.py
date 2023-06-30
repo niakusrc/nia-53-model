@@ -96,7 +96,7 @@ def save_test_output(pred_inverse, y_inverse,x_test = None, output_path=None):
             'MAPE (누적)': mape_list,
         }
         df_error = pd.DataFrame(data, index=idx)
-    with pd.ExcelWriter(output_path+'output.xlsx', engine='xlsxwriter') as writer:
+    with pd.ExcelWriter(output_path+'_output.xlsx', engine='xlsxwriter') as writer:
         df_y.to_excel(writer, sheet_name='GT')
         df_pred.to_excel(writer, sheet_name='PREDICTION')
         df_roi.to_excel(writer, sheet_name='교통유발 시설물 카운트')
