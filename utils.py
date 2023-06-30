@@ -122,11 +122,11 @@ def inverse_min_max(data, min_value, max_value):
 ############################################################################
 
 def rmse(y_true,y_pred):
-    rtn = np.sqrt(  np.average( np.square(y_pred-y_true) ) )
+    rtn = np.nan_to_num(np.sqrt(  np.average( np.square(y_pred-y_true) ) ))
     return  rtn
 
 def mape(y_true,y_pred):
-    rtn = np.mean(np.abs((y_true - y_pred) / (1.0+y_true)))
+    rtn = np.nan_to_num(np.mean(np.abs((y_true - y_pred) / (1.0+y_true))))
     return rtn
 
 #######################################################################

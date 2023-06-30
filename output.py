@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 from utils import *
 import warnings
-
+np.set_printoptions(linewidth=10000)
 warnings.filterwarnings(action='ignore')
 warnings.simplefilter(action='ignore', category=FutureWarning)
 def output_analysis(pred_inverse, y_inverse, output_path=None):
@@ -36,21 +36,27 @@ def save_test_output(pred_inverse, y_inverse,x_test = None, output_path=None):
     # print(x_test[3].shape)
     np_roi = x_test[3]
 
-    col_name = ['col_'+str(i) for i in range(0, num_col)]
+    col_name = [str(i//8) + ' * ' + str(i%8) for i in range(0, num_col)]
     roi_list = ['근린생활시설', '골프연습장', '판매시설', '대형판매시설', '위락시설',
             '관람집회시설', '의료시설', '교육연구시설', '운동시설', '숙박시설', '문화관람시설', '생태관람시설', '공장시설', '자동차관련시설', '방송통신시설', '관광휴게시설',
             '운수시설', '공항, 항만시설', '기타']
     zero_padding = ['col_'+str(i) for i in range(0,38)]
     roi_col_name = roi_list + zero_padding
-    index = np.arange(0, num_row)
-    df_pred = pd.DataFrame(np_pred, columns=col_name, index=index)
-    df_y = pd.DataFrame(np_y, columns=col_name, index=index)
-    df_roi = pd.DataFrame(np_roi,columns=roi_col_name)
+    # index = np.arange(0, num_row)
+    gt_index = [str(i)+'번째 y_test 데이터 값'for i in range(num_row)]
+    df_y = pd.DataFrame(np_y, columns=col_name, index=gt_index)
+
+    pred_index = [str(i) + '번째 x_test 데이터에 대한 모델 예측 값' for i in range(num_row)]
+    df_pred = pd.DataFrame(np_pred, columns=col_name, index=pred_index)
+
+    roi_index = [str(i) + '번째 x_test 데이터 ROI(교통유발시설물) 카운트 값' for i in range(num_row)]
+    df_roi = pd.DataFrame(np_roi,columns=roi_col_name, index=roi_index)
     df_roi.drop(zero_padding,axis=1,inplace=True)
 
     df_y.to_csv(output_path+'_gt.csv', encoding="utf-8-sig")
     df_pred.to_csv(output_path+'_pred.csv', encoding="utf-8-sig")
     df_roi.to_csv(output_path+'_roi.csv', encoding="utf-8-sig")
+
     # row 생략 없이 출력
     pd.set_option('display.max_rows', None)
     # col 생략 없이 출력
@@ -69,6 +75,32 @@ def save_test_output(pred_inverse, y_inverse,x_test = None, output_path=None):
         print('--- ', i, '번 째 데이터 결과 출력 끝 ---')
 
     print('MAPE original Data(+1) : %.3f'%mape(y_inverse, pred_inverse))
+
+    rmse_list = []
+    mape_list = []
+    roi_list = []
+    id_list = []
+    idx = []
+    print('len(df_y.index) : ',len(df_y.index))
+    for i in range(len(df_y.index)):
+        accumulate_rmse = rmse(df_y.iloc[:i].values, df_pred.iloc[:i].values)
+        accumulate_mape = mape(df_y.iloc[:i].values, df_pred.iloc[:i].values)
+        print(i, '번 째 데이터 로그', '누적 RMSE : ', accumulate_rmse, ' 누적 MAPE : ', accumulate_mape)
+        rmse_list.append(accumulate_rmse)
+        mape_list.append(accumulate_mape)
+        roi_list.append(df_roi.iloc[i].values)
+        id_list.append(str(i))
+        idx.append(str(i)+'번 째 데이터 Error 값')
+        data = {
+            'RMSE (누적)': rmse_list,
+            'MAPE (누적)': mape_list,
+        }
+        df_error = pd.DataFrame(data, index=idx)
+    with pd.ExcelWriter(output_path+'output.xlsx', engine='xlsxwriter') as writer:
+        df_y.to_excel(writer, sheet_name='GT')
+        df_pred.to_excel(writer, sheet_name='PREDICTION')
+        df_roi.to_excel(writer, sheet_name='교통유발 시설물 카운트')
+        df_error.to_excel(writer,sheet_name='Error')
 
     model_output_chk(output_path)
 

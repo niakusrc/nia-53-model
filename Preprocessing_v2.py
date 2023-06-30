@@ -223,6 +223,8 @@ def Preprocessiong_v2(path,region_name,test=False):
                     Cordtable, y, x = Calculate_distance(Cordtable, latitude, longitude)
 
                     DementData[int(y), int(x), time] += 1
+                    print(
+                        '지역 : %s | %s월 %s일 %d시 -> (%d, %d) 1회 카운팅' % (region, Month, JsonDataList, time, int(y), int(x)))
                 if index == 0:
                     RealDementData[region] = DementData
                     RealGuideData[region] = metaData[region]

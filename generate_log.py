@@ -11,7 +11,7 @@ def generate_log(region):
     pred_df = pd.read_csv('./output/' + region + '_pred.csv', index_col=0)
     roi_df = pd.read_csv('./output/' + region + '_roi.csv', index_col=0)
 
-    print(gt_df)
+    # print(gt_df)
     rmse_list = []
     mape_list = []
     roi_list = []
@@ -35,7 +35,7 @@ def generate_log(region):
     frame.to_csv('./log/' + region + '모델 테스트 로그(Error).csv', encoding='utf-8')
 
     # roi_df['Data ID'] = roi_df.index
-    roi_df.insert(0, 'Data ID', roi_df.index)
+    # roi_df.insert(0, 'Data ID', roi_df.index)
     print(roi_df)
     roi_df.to_csv('./log/'+ region + '모델 테스트 로그(교통유발 시설물 카운트).csv', encoding='utf-8')
 
