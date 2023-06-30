@@ -3,7 +3,9 @@ import os
 import pandas as pd
 
 from utils import mape, rmse
-
+import warnings
+warnings.filterwarnings(action='ignore')
+warnings.simplefilter(action='ignore', category=FutureWarning)
 def generate_log(region):
     gt_df = pd.read_csv('./output/' + region + '_gt.csv', index_col=0)
     pred_df = pd.read_csv('./output/' + region + '_pred.csv', index_col=0)

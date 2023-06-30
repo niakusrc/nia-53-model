@@ -15,9 +15,11 @@ def load_test_data(region):
     # demand_data = pd.read_pickle("data/total/DemandData_normal.pkl") ## last used
     # demand_data = pd.read_pickle("data/total/DemandData_1step.pkl")
     demand_data = demand_data.T
-    print('type of data',type(demand_data))
-    print('length of data :', len(demand_data))
+    print(region+'지역 test demand data type : ',type(demand_data))
+    print(region+'지역 test demand data length : ', len(demand_data))
+    print(region+'지역 test demand data shape : ', demand_data.shape)
 
+    print(region+'지역 마스크 필터를 demand 데이터에 적용합니다.')
     mask = cv2.imread('./region/'+region+'filter.jpg',cv2.IMREAD_GRAYSCALE)
     # print('mask : ',mask)
     for i in range(len(mask)):
@@ -29,20 +31,27 @@ def load_test_data(region):
     # print(mask)
     for idx,eliment in enumerate(demand_data):
         demand_data[idx] = np.multiply(eliment,mask)
+    print(region + '지역 마스크 필터를 demand 데이터에 적용하였습니다.')
     # print(demand_data[0])
     demand_x = []
     demand_y = []
     tmp = []
+    print(region + '지역 demand 데이터의 입력 데이터와 정답 데이터를 분할합니다.')
     for idx,data in enumerate(demand_data):
+        # print(idx,'번 째 demand 데이터를 ',len(demand_x),'번째 시계열 묶음에 추가합니다.')
         tmp.append(data)
         if len(tmp) == 4:
             demand_x.append(tmp)
+            # print(len(demand_x), '번째 시계열 묶음을 입력 데이터 리스트에 추가합니다.')
             if idx != len(demand_data) - 1:
-                # print(idx)
                 demand_y.append(demand_data[idx + 1])
+                # print(idx+1,'번 째 demand 데이터를 ',len(demand_y),'번째 정답 데이터 리스트에 추가합니다.')
             else:
                 demand_y.append(demand_data[idx])
+                # print('마지막 demand 데이터를 ', len(demand_y), '번째 정답 데이터 리스트에 추가합니다.')
             tmp = []
+    print(region + '지역 demand 데이터의 입력 데이터와 정답 데이터를 분할하였습니다.')
+    print('demand_y shape : ',np.array(demand_y).shape)
 
     demand_x = np.array(demand_x).swapaxes(1, 3)
     supply_x = []
@@ -434,3 +443,4 @@ def min_max_calc(region):
 
 # load_data('seoul')
 # load_prediction_data('seoul')
+load_test_data('seoul')

@@ -48,9 +48,9 @@ def save_test_output(pred_inverse, y_inverse,x_test = None, output_path=None):
     df_roi = pd.DataFrame(np_roi,columns=roi_col_name)
     df_roi.drop(zero_padding,axis=1,inplace=True)
 
-    df_y.to_csv(output_path+'_gt.csv')
-    df_pred.to_csv(output_path+'_pred.csv')
-    df_roi.to_csv(output_path+'_roi.csv')
+    df_y.to_csv(output_path+'_gt.csv', encoding="utf-8-sig")
+    df_pred.to_csv(output_path+'_pred.csv', encoding="utf-8-sig")
+    df_roi.to_csv(output_path+'_roi.csv', encoding="utf-8-sig")
     # row 생략 없이 출력
     pd.set_option('display.max_rows', None)
     # col 생략 없이 출력

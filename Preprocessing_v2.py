@@ -25,7 +25,8 @@ from datetime import datetime, date
 import matplotlib.cm as cm
 from tqdm import tqdm
 import warnings
-warnings.filterwarnings('ignore')
+warnings.filterwarnings(action='ignore')
+warnings.simplefilter(action='ignore', category=FutureWarning)
 
 # Json_Filelist = os.listdir('C:/Users/KUSRC/Desktop/Customized_TGNet/Customized_TGNet/raw_data/NIA_08_11_Total/')
 def RegionCorditable(Cordtable, region):
